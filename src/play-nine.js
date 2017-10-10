@@ -27,7 +27,7 @@ const Stars = (props) => {
         stars.push(<i key={i} className="fa fa-star"></i>)
     }
     return (
-        <div className="col-5">
+        <div>
             {stars}
         </div>
     );
@@ -36,43 +36,43 @@ const Stars = (props) => {
 const Button = (props) => {
     let button;
     switch (props.answerIsCorrect) {
-        case true:
-            button =
-                <button className="btn btn-success"
-                    disabled={props.doneStatus !== 0}>
-                    <i className="fa fa-check"></i>
-                </button>
-            break;
         case false:
             button =
-                <button className="btn btn-danger"
+                <button className="btn btn-block btn-danger"
                     disabled={props.doneStatus !== 0}>
                     <i className="fa fa-times"></i>
                 </button >
             break;
         default:
             button =
-                <button className="btn" disabled={props.doneStatus !== 0 || props.selectedNumbers.length === 0}
+                <button className="btn btn-block btn-success" disabled={props.doneStatus !== 0 || props.selectedNumbers.length === 0}
                     onClick={props.onAnswerChecked} >
-                    =
+                    Submit
                 </button>
     }
     return (
-        <div className="col-2 text-center">
-            {button}
-            <br /><br />
-            <button className="btn btn-warning btn-sm"
-                onClick={props.redraw}
-                disabled={props.doneStatus !== 0 || props.redraws === 0}>
-                <i className="fa fa-refresh"></i> {props.redraws}
-            </button>
+        <div>
+            <div className="row my-2 justify-content-center">
+                <div className="col-12 col-sm-4">
+                    {button}
+                </div>
+            </div>
+            <div className="row my-2 justify-content-center">
+                <div className="col-12 col-sm-4">
+                    <button className="btn btn-warning btn-block"
+                        onClick={props.redraw}
+                        disabled={props.doneStatus !== 0 || props.redraws === 0}>
+                        <i className="fa fa-refresh"></i> {props.redraws}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }
 
 const Answer = (props) => {
     return (
-        <div className="col-5">
+        <div>
             {props.selectedNumbers.map((number, i) =>
                 <span key={i} onClick={() => props.onNumberClicked(number)}>
                     {number}
@@ -265,19 +265,17 @@ class Game extends React.Component {
             timeRemaining } = this.state;
         return (
             <div className="container">
-                <h3>Play Nine</h3>
+                <h3>Nine Lives</h3>
                 <hr />
                 <Timer timeRemaining={timeRemaining} />
                 <div className="row">
-                    <Stars numberOfStars={numberOfStars} />
-                    <Button selectedNumbers={selectedNumbers}
-                        answerIsCorrect={answerIsCorrect}
-                        onAnswerChecked={this.checkAnswer}
-                        redraw={this.redraw}
-                        redraws={redraws}
-                        doneStatus={doneStatus} />
-                    <Answer selectedNumbers={selectedNumbers}
-                        onNumberClicked={this.unSelectNumber} />
+                    <div className="col">
+                        <Stars numberOfStars={numberOfStars} />
+                    </div>
+                    <div className="col">
+                        <Answer selectedNumbers={selectedNumbers}
+                            onNumberClicked={this.unSelectNumber} />
+                    </div>
                 </div>
                 <br />
                 {doneStatus ?
@@ -287,6 +285,12 @@ class Game extends React.Component {
                         usedNumbers={usedNumbers}
                         onNumberClicked={this.selectNumber} />
                 }
+                <Button selectedNumbers={selectedNumbers}
+                    answerIsCorrect={answerIsCorrect}
+                    onAnswerChecked={this.checkAnswer}
+                    redraw={this.redraw}
+                    redraws={redraws}
+                    doneStatus={doneStatus} />
             </div>
         );
     }
