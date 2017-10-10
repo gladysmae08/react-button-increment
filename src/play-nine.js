@@ -39,7 +39,6 @@ const Button = (props) => {
         case true:
             button =
                 <button className="btn btn-success"
-                    onClick={props.onAnswerAccepted}
                     disabled={props.doneStatus !== 0}>
                     <i className="fa fa-check"></i>
                 </button>
@@ -184,10 +183,14 @@ class Game extends React.Component {
     }
 
     checkAnswer = () => {
-        this.setState(prevState => ({
-            answerIsCorrect: this.state.numberOfStars ===
-            this.state.selectedNumbers.reduce((acc, n) => acc + n, 0)
-        }));
+        if (this.state.numberOfStars ===
+            this.state.selectedNumbers.reduce((acc, n) => acc + n, 0)) {
+            this.acceptAnswer();
+        } else {
+            this.setState(prevState => ({
+                answerIsCorrect: false
+            }));
+        }
     }
 
     acceptAnswer = () => {
@@ -270,7 +273,6 @@ class Game extends React.Component {
                     <Button selectedNumbers={selectedNumbers}
                         answerIsCorrect={answerIsCorrect}
                         onAnswerChecked={this.checkAnswer}
-                        onAnswerAccepted={this.acceptAnswer}
                         redraw={this.redraw}
                         redraws={redraws}
                         doneStatus={doneStatus} />
