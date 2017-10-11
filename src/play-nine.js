@@ -123,12 +123,16 @@ const DoneFrame = (props) => {
         default:
     }
     return (
-        <div className="text-center">
-            <h2 className={className}>{text}</h2>
-            <button className="btn btn-secondary"
-                onClick={props.resetGame}>
-                Play Again
+        <div className="row justify-content-center text-center">
+            <div className="col-12">
+                <h2 className={className}>{text}</h2>
+            </div>
+            <div className="col-12 col-sm-4">
+                <button className="btn btn-block btn-secondary"
+                    onClick={props.resetGame}>
+                    Play Again
             </button>
+            </div>
         </div>
     );
 }
@@ -268,11 +272,11 @@ class Game extends React.Component {
                 <h3>Nine Lives</h3>
                 <hr />
                 <Timer timeRemaining={timeRemaining} />
-                <div className="row">
-                    <div className="col">
+                <div className="row game-display">
+                    <div className="col col-sm-3 ml-sm-auto">
                         <Stars numberOfStars={numberOfStars} />
                     </div>
-                    <div className="col">
+                    <div className="col col-sm-3 mr-sm-auto">
                         <Answer selectedNumbers={selectedNumbers}
                             onNumberClicked={this.unSelectNumber} />
                     </div>

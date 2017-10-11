@@ -24,3 +24,7 @@ span.used {
     color: #99bb99;
     cursor: not-allowed;
 }
+
+.game-display {
+    min-height: 150px;
+}
